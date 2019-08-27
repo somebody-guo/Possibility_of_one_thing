@@ -19,18 +19,10 @@ plugins {
 repositories {
     // You can declare any Maven/Ivy/file repository here.
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-
 }
 
 dependencies {
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:27.1-jre'
-
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
-}
-
-application {
-    // Define the main class for the application
-    mainClassName = 'Possibility_of_one_thing.App'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
 }

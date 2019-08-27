@@ -1,26 +1,23 @@
 package com.ghr.possibility;
 
-import java.math.BigDecimal;
-
 public class Event {
-    private String eventAction;
-    BigDecimal eventPossibility = new BigDecimal("0.0");
+    private double possibility;
 
-    Event(String eventAction) {
-        this.eventAction = eventAction;
+    Event(double possibility) {
+        if (possibility < 0.0 || possibility > 1.0)
+            throw new IllegalArgumentException("illegal possibility");
+        this.possibility = possibility;
     }
 
-    public void setEventPossibility(double eventPossibility) throws Exception {
-        if(eventPossibility < 0.0 || eventPossibility > 1.0)
-            throw new Exception("illegal Possibility");
-        this.eventPossibility = BigDecimal.valueOf(eventPossibility);
+    public Event negate() {
+        return new Event(1.0 - this.possibility);
     }
 
-    public double possibilityOfOccurrence(Event... events) {
-        BigDecimal output = this.eventPossibility;
-        for (Event event : events) {
-            output = output.multiply(BigDecimal.valueOf(event.possibilityOfOccurrence()));
-        }
-        return output.doubleValue();
+    public Event and(Event event) {
+        return new Event(this.possibility * event.possibility);
+    }
+
+    public Event or(Event event) {
+        return new Event(1.0 - (1.0 - this.possibility) * (1.0 - event.possibility));
     }
 }
